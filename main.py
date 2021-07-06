@@ -16,7 +16,7 @@ puzzle = [
 
 sortedLine = [i for i in range(1, 10)]
 
-print(np.matrix(puzzle))
+print(np.matrix(puzzle), "\n")
 
 
 
@@ -44,7 +44,6 @@ def ValidGrid(sudoku):
 
 
 def Solve(sudoku, stackLevel):
-    print(stackLevel)
     nextEmpty = None
     for row in range(len(sudoku)):
         for col in range(len(sudoku)):
