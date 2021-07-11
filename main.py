@@ -1,6 +1,6 @@
 import numpy as np
 import copy
-
+import time
 
 puzzle = [
     [ 2, -1, -1,  3,  6, -1, -1, -1, -1],
@@ -16,7 +16,7 @@ puzzle = [
 
 sortedLine = [i for i in range(1, 10)]
 
-print(np.matrix(puzzle), "\n")
+#print(np.matrix(puzzle), "\n")
 
 
 
@@ -54,7 +54,7 @@ def Solve(sudoku, stackLevel):
             break
     
     if nextEmpty == None:
-        print(np.matrix(sudoku))
+        #print(np.matrix(sudoku))
         return True
 
     for attempt in range(1, 10):
@@ -72,5 +72,10 @@ def Solve(sudoku, stackLevel):
     return False
 
 
-
+startTime = time.time()
 Solve(puzzle, 0)
+print("Time Taken: ", time.time()-startTime)
+
+
+
+# Backtracking - 0.02 seconds
