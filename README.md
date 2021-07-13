@@ -1,4 +1,4 @@
-# Sudoku-Solver
+# Sudoku-Solver-Generator
 
 
-Classic Sudoku solver using a backtracking recursive method.
+Classic Sudoku solver and generator, both using a backtracking recursive method.
