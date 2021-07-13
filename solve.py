@@ -1,6 +1,5 @@
 import numpy as np
 import copy
-import time
 
 puzzle = [
     [ 2, -1, -1,  3,  6, -1, -1, -1, -1],
@@ -18,6 +17,7 @@ sortedLine = [i for i in range(1, 10)]
 
 #print(np.matrix(puzzle), "\n")
 
+solutionsFound = 0
 
 
 def ValidGrid(sudoku):
@@ -43,7 +43,10 @@ def ValidGrid(sudoku):
     return True
 
 
-def Solve(sudoku, stackLevel):
+def Solve(sudoku, stackLevel=0):
+    global solutionsFound
+    if stackLevel == 0:
+        solutionsFound = 0
     nextEmpty = None
     for row in range(len(sudoku)):
         for col in range(len(sudoku)):
@@ -55,7 +58,8 @@ def Solve(sudoku, stackLevel):
     
     if nextEmpty == None:
         #print(np.matrix(sudoku))
-        return True
+        solutionsFound += 1
+        return solutionsFound
 
     for attempt in range(1, 10):
         sudoku[nextEmpty[0]][nextEmpty[1]] = attempt
@@ -64,18 +68,6 @@ def Solve(sudoku, stackLevel):
             continue
         
         
-        finished = Solve(copy.deepcopy(sudoku), stackLevel+1)
-        if finished:
-            return True
+        Solve(copy.deepcopy(sudoku), stackLevel+1)    
     
-    
-    return False
-
-
-startTime = time.time()
-Solve(puzzle, 0)
-print("Time Taken: ", time.time()-startTime)
-
-
-
-# Backtracking - 0.02 seconds
+    return solutionsFound
