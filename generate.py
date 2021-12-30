@@ -8,19 +8,25 @@ blankGrid = [[-1 for i in range(9)] for j in range(9)]
 def PrintSudoku(grid):
     for x in range(len(grid)):
         if x % 3 == 0:
-                print("- "*20)
+                print("- "*13)
         for y in range(len(grid)):    
             if y % 3 == 0:
                 print("|", end="")
             
             if grid[x][y] == -1:
-                print("    ", end="")
+                if y%3 == 0:
+                    print(" ", end="")
+                else:
+                    print("   ", end="")
             else:
-                print("  ", grid[x][y], end="")
+                if y%3 == 0:
+                    print(grid[x][y], end="")
+                else:
+                    print(" ", grid[x][y], end="")
 
             if y == 8:
                 print("|")
-    print("- "*20)
+    print("- "*13)
 
 
 
@@ -54,24 +60,20 @@ def Generate(grid, currPos=[0,0]):
 
 
 def RemoveCells(grid, possibilities = [[[i, j] for i in range(9)] for j in range(9)], depth=0):
-    print("\nDepth: " + str(depth))
     currGrid = copy.deepcopy(grid)
 
     while len(possibilities) > 0:
         choiceRow = random.choice(possibilities)
         choiceRowIndex = possibilities.index(choiceRow)
         choice = random.choice(choiceRow)
-        print(choice)
         currGrid[choice[0]][choice[1]] = -1
-        #print(np.matrix(currGrid))
         solutionsFound = solve.Solve(copy.deepcopy(currGrid))
-        #print("Solutions Found: " + str(solutionsFound))
-        #print(np.matrix(currGrid))
+        
         if solutionsFound == 1:
             del possibilities[choiceRowIndex][choiceRow.index(choice)]
             if possibilities[choiceRowIndex] == []:
                 del possibilities[choiceRowIndex]
-            #print(np.matrix(currGrid))
+
             result = RemoveCells(currGrid, possibilities, depth+1)
             if result[0] == False:
                 return (currGrid, 80-depth)
